@@ -1,0 +1,16 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Roan Hageman -- Programmer -- @Twijgjes
+
+# THANKS
+
+    Mum & Da.
+    Anyone who ever taught me anything.
+
+# TECHNOLOGY COLOPHON
+
+    HTML5, CSS3
+
