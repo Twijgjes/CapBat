@@ -59,7 +59,7 @@ module CapBat {
     }
   }
 
-  export class DrawableChild extends Enitity {
+  export class DrawableChild extends Drawable {
 
     private parent: Drawable;
 
