@@ -6,6 +6,8 @@ module CapBat {
     public static getNormalBetweenVecs( from: CapBat.Vec2, to: CapBat.Vec2 ) {
       var fromV = new CapBat.Vec2().set(from),
           toV = new CapBat.Vec2().set(to);
+      toV.sub( fromV );
+      return toV.normalize();
     }
 
   }

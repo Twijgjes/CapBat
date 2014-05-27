@@ -35,9 +35,9 @@ module CapBat {
 
   export class Drawable extends Entity {
 
-    private c: string;
+    private c: CapBat.Color;
 
-    constructor(gameRef: CapBat.Game, pos: CapBat.Vec2, color: string, parent: CapBat.Entity = null){
+    constructor(gameRef: CapBat.Game, pos: CapBat.Vec2, color: CapBat.Color){
       super(gameRef, pos);
       this.c = color;
     }
@@ -46,7 +46,34 @@ module CapBat {
       context.save();
       context.translate( this.p.x, this.p.y );
       context.fillStyle = this.c;
-      context.fillRect(5, 5, 10, 10);
+      context.fillRect(-5, -5, 10, 10);
+      context.restore();
+    }
+
+    get c(): string {
+      return c.getString();
+    }
+
+    set c( color: string ) {
+      this.c = color;
+    }
+  }
+
+  export class DrawableChild extends Enitity {
+
+    private parent: Drawable;
+
+    constructor(gameRef: CapBat.Game, pos: CapBat.Vec2, color: string, parent: Drawable) {
+      super(gameRef, pos, color);
+      this.parent = parent;
+    }
+
+    public draw( canvas, context ){
+      var pos = this.p.add(this.parent.p);
+      context.save();
+      context.translate( pos.x, pos.y );
+      context.fillStyle = this.c;
+      context.fillRect(-5,-5,10, 10);
       context.restore();
     }
   }
