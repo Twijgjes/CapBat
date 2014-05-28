@@ -51,8 +51,6 @@ module CapBat {
       this.normalize();
     }
 
-
-
     private normalize() {
       this.r = Utils.trim(0, 255, this.r);
       this.g = Utils.trim(0, 255, this.g);

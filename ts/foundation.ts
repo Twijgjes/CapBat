@@ -2,7 +2,7 @@
 
 module CapBat {
   export class GameObject {
-    public game: CapBat.Game;
+    private game: CapBat.Game;
     public id: number;
 
     constructor(gameRef: CapBat.Game) {
@@ -13,11 +13,11 @@ module CapBat {
 
   export class Entity extends GameObject {
 
-    private p: CapBat.Vec2;
+    private p: Vec2;
 
-    constructor(gameRef: CapBat.Game, pos: CapBat.Vec2) {
+    constructor(gameRef: CapBat.Game, pos: Vec2) {
       super(gameRef);
-      this.p = CapBat.Vec2.returnClone( pos );
+      this.p = Vec2.returnClone( pos );
     }
 
     public update( speed ) {
@@ -25,7 +25,7 @@ module CapBat {
     }
 
     get p(): Vec2 {
-      return CapBat.Vec2.returnClone(this.p);
+      return Vec2.returnClone(this.p);
     }
 
     set p( v: Vec2 ) {
