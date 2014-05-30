@@ -1,4 +1,5 @@
-/// <reference path="Main.ts" />
+/// <reference path="main.ts" />
+/// <reference path="utils.ts" />
 
 module CapBat {
   export class GameObject {
@@ -39,7 +40,7 @@ module CapBat {
 
     constructor(gameRef: CapBat.Game, pos: CapBat.Vec2, color: CapBat.Color){
       super(gameRef, pos);
-      this.c = color;
+      this.c.set = color;
     }
 
     public draw( canvas, context ) {
