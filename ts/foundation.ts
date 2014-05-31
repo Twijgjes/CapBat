@@ -18,7 +18,7 @@ module CapBat {
 
     constructor(gameRef: CapBat.Game, pos: Vec2) {
       super(gameRef);
-      this.p = Vec2.returnClone( pos );
+      this.p = Vec2.clone( pos );
     }
 
     public update( speed ) {
@@ -26,7 +26,7 @@ module CapBat {
     }
 
     get p(): Vec2 {
-      return Vec2.returnClone(this.p);
+      return new Vec2.clone(this.p);
     }
 
     set p( v: Vec2 ) {

@@ -83,7 +83,7 @@ module CapBat {
       return this;
     }
 
-    public static returnClone( v ) {
+    public static clone( v ) {
       return new CapBat.Vec2(v.x, v.y);
     }
   }
