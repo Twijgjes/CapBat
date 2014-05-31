@@ -5,13 +5,22 @@
 module CapBat {
   var VERSION: string = '0.0.1';
 
+  interface settings {
+    canvas: any;
+    context: any;
+    WIDTH: number;
+    HEIGHT: number;
+    debug: boolean;
+    speed: number;
+  }
+
   export class Game {
 
     public isInitialized: boolean;
     public drawables: Drawable[];
     public entities: Entity[];
     private ids: number;
-    private settings: {};
+    private settings: settings;
 
     constructor(userSettings) {
       this.drawables = [];
@@ -28,14 +37,14 @@ module CapBat {
 
       this.initGameState();
 
-      window.requestAnimFrame = ( function ( callback ) {
+      var requestAnimFrame: (callback: () => void) => void = (function(){
         return window.requestAnimationFrame ||
-          window.webkitRequestAnimationFrame ||
-          window.mozRequestAnimationFrame ||
-          window.oRequestAnimationFrame ||
+          (<any>window).webkitRequestAnimationFrame ||
+          (<any>window).mozRequestAnimationFrame ||
+          (<any>window).oRequestAnimationFrame ||
           window.msRequestAnimationFrame ||
-          function( callback ) {
-            window.setTimeout(callback, 1000 / 60);
+          function(callback){
+            window.setTimeout(callback, 1000 / 60, new Date().getTime());
           };
       })();
 

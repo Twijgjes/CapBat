@@ -14,49 +14,50 @@ module CapBat {
 
   export class Entity extends GameObject {
 
-    private p: Vec2;
+    private _p: Vec2;
+    get p( ): Vec2 {
+      return Vec2.clone(this._p);
+    }
+
+    set p( v: Vec2 ) {
+      this._p.set(v);
+    }
 
     constructor(gameRef: CapBat.Game, pos: Vec2) {
       super(gameRef);
-      this.p = Vec2.clone( pos );
+      this._p = Vec2.clone( pos );
     }
 
     public update( speed ) {
 
     }
 
-    get p(): Vec2 {
-      return new Vec2.clone(this.p);
-    }
 
-    set p( v: Vec2 ) {
-      this.p.set(v);
-    }
   }
 
   export class Drawable extends Entity {
 
-    private c: CapBat.Color;
+    private _c: Color;
 
-    constructor(gameRef: CapBat.Game, pos: CapBat.Vec2, color: CapBat.Color){
+    constructor(gameRef: CapBat.Game, pos: CapBat.Vec2, color: Color){
       super(gameRef, pos);
-      this.c.set = color;
+      this._c = color;
     }
 
     public draw( canvas, context ) {
       context.save();
       context.translate( this.p.x, this.p.y );
-      context.fillStyle = this.c;
+      context.fillStyle = this.c.getString();
       context.fillRect(-5, -5, 10, 10);
       context.restore();
     }
 
-    get c(): string {
-      return c.getString();
+    get c(): Color {
+      return new Color( this._c.r, this._c.g, this._c.b, this._c.a );
     }
 
-    set c( color: string ) {
-      this.c = color;
+    set c( color: Color ) {
+      this._c = color;
     }
   }
 
@@ -64,7 +65,7 @@ module CapBat {
 
     private parent: Drawable;
 
-    constructor(gameRef: CapBat.Game, pos: CapBat.Vec2, color: string, parent: Drawable) {
+    constructor(gameRef: CapBat.Game, pos: CapBat.Vec2, color: Color, parent: Drawable) {
       super(gameRef, pos, color);
       this.parent = parent;
     }
@@ -73,7 +74,7 @@ module CapBat {
       var pos = this.p.add(this.parent.p);
       context.save();
       context.translate( pos.x, pos.y );
-      context.fillStyle = this.c;
+      context.fillStyle = this.c.getString();
       context.fillRect(-5,-5,10, 10);
       context.restore();
     }

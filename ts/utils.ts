@@ -25,13 +25,13 @@ module CapBat {
   export class Color {
 
     constructor(
-      private r: number = 255,
-      private g: number = 255,
-      private b: number = 255,
-      private a: number = 1
+      public r: number = 255,
+      public g: number = 255,
+      public b: number = 255,
+      public a: number = 1
     ) {}
 
-    public getString(){
+    public getString(): string {
       return 'rgba('+this.r+','+this.g+','+this.b+','+this.a+')';
     }
 
