@@ -15,6 +15,18 @@ module CapBat {
   export class Entity extends GameObject {
 
     private _p: Vec2;
+    private _r: number;
+
+    constructor(gameRef: CapBat.Game, pos: Vec2, rot: number) {
+      super(gameRef);
+      this._p = Vec2.clone( pos );
+      this._r = rot;
+    }
+
+    public update( speed ) {
+
+    }
+
     get p( ): Vec2 {
       return Vec2.clone(this._p);
     }
@@ -23,13 +35,12 @@ module CapBat {
       this._p.set(v);
     }
 
-    constructor(gameRef: CapBat.Game, pos: Vec2) {
-      super(gameRef);
-      this._p = Vec2.clone( pos );
+    get r( ): number {
+      return this._r;
     }
 
-    public update( speed ) {
-
+    set r( r: number ) {
+      this._r = r;
     }
 
 
@@ -39,14 +50,15 @@ module CapBat {
 
     private _c: Color;
 
-    constructor(gameRef: CapBat.Game, pos: CapBat.Vec2, color: Color){
-      super(gameRef, pos);
+    constructor(gameRef: CapBat.Game, pos: CapBat.Vec2, rot: number, color: Color){
+      super(gameRef, pos, rot);
       this._c = color;
     }
 
     public draw( canvas, context ) {
       context.save();
       context.translate( this.p.x, this.p.y );
+      context.rotate(this.r);
       context.fillStyle = this.c.getString();
       context.fillRect(-5, -5, 10, 10);
       context.restore();
@@ -63,10 +75,10 @@ module CapBat {
 
   export class DrawableChild extends Drawable {
 
-    private parent: Drawable;
+    public parent: Entity;
 
-    constructor(gameRef: CapBat.Game, pos: CapBat.Vec2, color: Color, parent: Drawable) {
-      super(gameRef, pos, color);
+    constructor(gameRef: CapBat.Game, pos: CapBat.Vec2, rot: number, color: Color, parent: Entity) {
+      super(gameRef, pos, rot, color);
       this.parent = parent;
     }
 
@@ -74,6 +86,7 @@ module CapBat {
       var pos = this.p.add(this.parent.p);
       context.save();
       context.translate( pos.x, pos.y );
+      context.rotate(this.r);
       context.fillStyle = this.c.getString();
       context.fillRect(-5,-5,10, 10);
       context.restore();

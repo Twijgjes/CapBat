@@ -1,6 +1,8 @@
 /// <reference path="utils.ts" />
 /// <reference path="foundation.ts" />
 /// <reference path="math.ts" />
+/// <reference path="ships.ts" />
+/// <reference path="shapes.ts" />
 
 module CapBat {
   var VERSION: string = '0.0.1';
@@ -48,6 +50,11 @@ module CapBat {
           };
       })();
 
+      this.settings.context.mozImageSmoothingEnabled = false;
+      this.settings.context.webkitImageSmoothingEnabled = false;
+      this.settings.context.msImageSmoothingEnabled = false;
+      this.settings.context.imageSmoothingEnabled = false;
+
       this.gameloop();
       this.isInitialized = true;
     }
@@ -74,8 +81,11 @@ module CapBat {
     }
 
     public initGameState() {
-      this.drawables.push( new Drawable( this, new Vec2( 50, 50 ), new Color( 10, 10, 10, 1 ) ) );
-      this.drawables.push( new Drawable( this, new Vec2( 100, 100 ), new Color( 100, 100, 100, 1 ) ) );
+      this.drawables.push( new Drawable( this, new Vec2( 50, 50 ), 0, new Color( 150, 10, 10, 1 ) ) );
+      this.drawables.push( new Drawable( this, new Vec2( 100, 100 ), 0, new Color( 100, 100, 250, 1 ) ) );
+      var fighter = new Fighter( this, new Vec2(0,0), 1, new Color(1,1,1,1) );
+      this.drawables.push( fighter );
+      this.entities.push( fighter );
     }
 
     private clearContext() {
