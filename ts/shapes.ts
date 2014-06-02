@@ -13,9 +13,8 @@ module CapBat {
     }
 
     public draw( canvas, context ){
-      var pos = this.p.add(this.parent.p);
       context.save();
-      context.translate( pos.x, pos.y );
+      context.translate( this.p.x, this.p.y );
       context.rotate( this.r );
       context.fillStyle = this.c.getString();
       context.beginPath();

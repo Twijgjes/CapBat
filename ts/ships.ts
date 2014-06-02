@@ -16,6 +16,7 @@ module CapBat {
         new Vec2(0 , 10),
         new Vec2(5 , -5)
       ]));
+      this.game.controls.registerKey(32, this.shoot);
     }
 
     draw( canvas, context ) {
@@ -30,6 +31,10 @@ module CapBat {
 
     update( speed ) {
       this.r += .1;
+    }
+
+    public shoot() {
+      console.log('pew! pew!');
     }
   }
 }

@@ -3,6 +3,7 @@
 /// <reference path="math.ts" />
 /// <reference path="ships.ts" />
 /// <reference path="shapes.ts" />
+/// <reference path="controls.ts" />
 
 module CapBat {
   var VERSION: string = '0.0.1';
@@ -23,6 +24,7 @@ module CapBat {
     public entities: Entity[];
     private ids: number;
     private settings: settings;
+    public controls: Controls;
 
     constructor(userSettings) {
       this.drawables = [];
@@ -36,6 +38,7 @@ module CapBat {
         speed: 0.1
       };
       this.settings = Utils.extend(this.settings, userSettings);
+      this.controls = new Controls(this);
 
       this.initGameState();
 
@@ -61,6 +64,7 @@ module CapBat {
 
     gameloop(){
       // Update
+      this.controls.processKeys();
       this.entities.forEach((entity) => {
         entity.update( this.settings.speed );
       });
@@ -83,7 +87,7 @@ module CapBat {
     public initGameState() {
       this.drawables.push( new Drawable( this, new Vec2( 50, 50 ), 0, new Color( 150, 10, 10, 1 ) ) );
       this.drawables.push( new Drawable( this, new Vec2( 100, 100 ), 0, new Color( 100, 100, 250, 1 ) ) );
-      var fighter = new Fighter( this, new Vec2(0,0), 1, new Color(1,1,1,1) );
+      var fighter = new Fighter( this, new Vec2(10,10), 1, new Color(1,1,1,1) );
       this.drawables.push( fighter );
       this.entities.push( fighter );
     }
