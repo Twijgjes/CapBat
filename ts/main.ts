@@ -85,9 +85,14 @@ module CapBat {
     }
 
     public initGameState() {
-      this.drawables.push( new Drawable( this, new Vec2( 50, 50 ), 0, new Color( 150, 10, 10, 1 ) ) );
-      this.drawables.push( new Drawable( this, new Vec2( 100, 100 ), 0, new Color( 100, 100, 250, 1 ) ) );
-      var fighter = new Fighter( this, new Vec2(10,10), 1, new Color(1,1,1,1) );
+      var points = [
+        new Vec2(0, 5),
+        new Vec2(5, -5),
+        new Vec2(-5, -5)
+      ];
+      this.drawables.push( new Triangle( this, new Vec2( 50, 50 ), 0, new Color( 150, 10, 10, 1 ), points ) );
+      this.drawables.push( new Triangle( this, new Vec2( 100, 100 ), 0, new Color( 100, 100, 250, 1 ), points ) );
+      var fighter = new Fighter( this, new Vec2(10,10), new Vec2(), new Vec2(), 0, 0, 0 );
       this.drawables.push( fighter );
       this.entities.push( fighter );
     }

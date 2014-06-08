@@ -17,8 +17,8 @@ module CapBat {
     public y: number;
 
     constructor(x?: number, y?: number){
-      this.x = x;
-      this.y = y;
+      this.x = x || 0;
+      this.y = y || 0;
     }
 
     public add( v: Vec2 ): Vec2 {

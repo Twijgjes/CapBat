@@ -35,7 +35,7 @@ module CapBat {
       return 'rgba('+this.r+','+this.g+','+this.b+','+this.a+')';
     }
 
-    public add(color: Color){
+    public add(color: Color) {
       this.r += color.r;
       this.g += color.g;
       this.b += color.b;
@@ -43,12 +43,23 @@ module CapBat {
       this.normalize();
     }
 
-    public sub(color: Color){
+    public sub(color: Color) {
       this.r -= color.r;
       this.g -= color.g;
       this.b -= color.b;
       this.a -= color.a;
       this.normalize();
+    }
+
+    public set( color: Color ){
+      this.r = color.r;
+      this.g = color.g;
+      this.b = color.b;
+      this.a = color.a;
+    }
+
+    public static clone( color: Color ) {
+      return new Color( color.r, color.g, color.b, color.a );
     }
 
     private normalize() {

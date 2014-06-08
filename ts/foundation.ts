@@ -1,94 +1,60 @@
 /// <reference path="main.ts" />
 /// <reference path="utils.ts" />
 
+// TODO: split up Entity and Drawable so they can be extended separately.
+
 module CapBat {
-  export class GameObject {
-    public game: CapBat.Game;
-    public id: number;
+  export interface GameObject {
+    id: number;
+    game: Game;
 
-    constructor(gameRef: CapBat.Game) {
-      this.game = gameRef;
-      this.id = gameRef.assignId();
-    }
+    // This is the constructor
+//    new( game: Game );
   }
 
-  export class Entity extends GameObject {
+  export interface Entity {
 
-    private _p: Vec2;
-    private _r: number;
+    p: Vec2;
+    r: number;
 
-    constructor(gameRef: CapBat.Game, pos: Vec2, rot: number) {
-      super(gameRef);
-      this._p = Vec2.clone( pos );
-      this._r = rot;
-    }
+    // This constructor overloads the GameObject's
+//    new(
+//      p: Vec2,
+//      r: number
+//    );
 
-    public update( speed ) {
+    update( speed: number );
+  }
 
-    }
+  export interface DynamicEntity extends Entity {
 
-    get p( ): Vec2 {
-      return Vec2.clone(this._p);
-    }
+    v: Vec2;
+    a: Vec2;
+    rV: number;
+    rA: number;
 
-    set p( v: Vec2 ) {
-      this._p.set(v);
-    }
+//    new(
+//      p: Vec2,
+//      v: Vec2,
+//      a: Vec2,
+//      r: number,
+//      rV: number,
+//      rA: number
+//    );
 
-    get r( ): number {
-      return this._r;
-    }
-
-    set r( r: number ) {
-      this._r = r;
-    }
-
+    update( speed: number );
 
   }
 
-  export class Drawable extends Entity {
+  export interface Drawable {
 
-    private _c: Color;
+    c: Color;
 
-    constructor(gameRef: CapBat.Game, pos: CapBat.Vec2, rot: number, color: Color){
-      super(gameRef, pos, rot);
-      this._c = color;
-    }
+//    new(
+//      game: Game,
+//      c: Color
+//    );
 
-    public draw( canvas, context ) {
-      context.save();
-      context.translate( this.p.x, this.p.y );
-      context.rotate(this.r);
-      context.fillStyle = this.c.getString();
-      context.fillRect(-5, -5, 10, 10);
-      context.restore();
-    }
-
-    get c(): Color {
-      return new Color( this._c.r, this._c.g, this._c.b, this._c.a );
-    }
-
-    set c( color: Color ) {
-      this._c = color;
-    }
-  }
-
-  export class DrawableChild extends Drawable {
-
-    public parent: Entity;
-
-    constructor(gameRef: CapBat.Game, pos: CapBat.Vec2, rot: number, color: Color, parent: Entity) {
-      super(gameRef, pos, rot, color);
-      this.parent = parent;
-    }
-
-    public draw( canvas, context ){
-      context.save();
-      context.translate( this.p.x, this.p.y );
-      context.rotate(this.r);
-      context.fillStyle = this.c.getString();
-      context.fillRect(-5,-5,10, 10);
-      context.restore();
-    }
+    draw( canvas, context );
   }
 }

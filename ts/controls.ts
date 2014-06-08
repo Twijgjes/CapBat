@@ -15,12 +15,15 @@ module CapBat {
     }
   }
 
-  export class Controls extends GameObject {
+  export class Controls implements GameObject {
 
     private keys: KeyMap[];
+    public game: Game;
+    public id: number;
 
-    constructor(gameRef: Game) {
-      super(gameRef);
+    constructor( game: Game) {
+      this.game = game;
+      this.id = game.assignId();
       document.addEventListener( 'keydown' , this.onKeyDown.bind( this ), false );
       document.addEventListener( 'keyup' , this.onKeyUp.bind( this ), false );
       this.keys = [];
