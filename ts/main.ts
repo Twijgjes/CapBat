@@ -39,6 +39,7 @@ module CapBat {
       };
       this.settings = Utils.extend(this.settings, userSettings);
       this.controls = new Controls(this);
+      this.ids = 1;
 
       this.initGameState();
 
@@ -95,6 +96,9 @@ module CapBat {
       var fighter = new Fighter( this, new Vec2(10,10), new Vec2(), new Vec2(), 0, 0, 0 );
       this.drawables.push( fighter );
       this.entities.push( fighter );
+      var cruiser = new Cruiser( this, new Vec2(-50,-50), new Vec2(), new Vec2(), 0, 0, 0 );
+      this.drawables.push( cruiser );
+      this.entities.push( cruiser );
     }
 
     private clearContext() {

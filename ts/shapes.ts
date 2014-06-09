@@ -63,7 +63,7 @@ module CapBat {
     }
   }
 
-  export class Square extends Shape {
+  export class Rect extends Shape {
 
     public width: number;
     public height: number;
@@ -79,7 +79,7 @@ module CapBat {
       context.translate( this.p.x, this.p.y );
       context.rotate( this.r );
       context.fillStyle = this.c.getString();
-      context.fillRect(  );
+      context.fillRect( 0, 0, this.width, this.height );
       context.restore();
     }
   }
