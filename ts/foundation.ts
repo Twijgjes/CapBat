@@ -48,8 +48,6 @@ module CapBat {
 
   export interface Drawable {
 
-    c: Color;
-
 //    new(
 //      game: Game,
 //      c: Color

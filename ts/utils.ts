@@ -1,6 +1,7 @@
-/**
- * Created by roanh_000 on 21/05/2014.
- */
+/// <reference path="main.ts" />
+/// <reference path="math.ts" />
+/// <reference path="foundation.ts" />
+
 module CapBat {
   export class Utils {
 
@@ -69,5 +70,34 @@ module CapBat {
       this.a = Utils.trim(0, 1, this.a);
     }
 
+  }
+
+  export class DebugBox implements Entity, Drawable {
+
+    public game: Game;
+    public id: number;
+    public p: Vec2;
+    public r: number;
+
+    constructor( game: Game, position: Vec2 ) {
+      this.game = game;
+      this.id = game.assignId();
+      this.p = position;
+      this.r = 0;
+      this.game.debug.push( this );
+    }
+
+    update( speed: number ) {
+
+    }
+
+    draw( canvas, context ) {
+      context.save();
+      context.translate( this.p.x, this.p.y );
+      context.rotate( this.r );
+      context.fillStyle = 'rgba(0,0,255,1)';
+      context.fillRect( 0, 0, 5, 5 );
+      context.restore();
+    }
   }
 }

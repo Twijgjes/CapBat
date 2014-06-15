@@ -68,8 +68,8 @@ module CapBat {
     public width: number;
     public height: number;
 
-    constructor(game: CapBat.Game, pos: CapBat.Vec2, r: number, color: Color, width: number, height: number ){
-      super( game, pos, r, color );
+    constructor( game: CapBat.Game, pos: CapBat.Vec2, rot: number, color: Color, width: number, height: number ){
+      super( game, pos, rot, color );
       this.width = width;
       this.height = height;
     }
@@ -82,5 +82,27 @@ module CapBat {
       context.fillRect( 0, 0, this.width, this.height );
       context.restore();
     }
+  }
+
+  export class Circle extends Shape {
+
+    public radius: number;
+
+    constructor( game: CapBat.Game, pos: CapBat.Vec2, rot: number, color: Color, radius: number ) {
+      super( game, pos, rot, color );
+      this.radius = radius;
+    }
+
+    public draw( canvas, context ) {
+      context.save();
+      context.translate( this.p.x, this.p.y );
+      context.rotate( this.r );
+      context.beginPath();
+      context.fillStyle = this.c.getString();
+      context.arc( 0, 0, this.radius, 0, Math.PI * 2, false );
+      context.fill();
+      context.restore();
+    }
+
   }
 }

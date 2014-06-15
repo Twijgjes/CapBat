@@ -20,13 +20,19 @@ module CapBat {
     private keys: KeyMap[];
     public game: Game;
     public id: number;
+    public mouseScreenPos: Vec2;
+    public mouseWorldPos: Vec2;
 
     constructor( game: Game) {
       this.game = game;
       this.id = game.assignId();
       document.addEventListener( 'keydown' , this.onKeyDown.bind( this ), false );
       document.addEventListener( 'keyup' , this.onKeyUp.bind( this ), false );
+      document.addEventListener( 'mousemove' , this.onMouseMove.bind( this ), false );
+      document.addEventListener( 'mouseup' , this.onMouseUp.bind( this ), false );
       this.keys = [];
+      this.mouseScreenPos = new Vec2();
+      this.mouseWorldPos = new Vec2();
     }
 
     public registerKey(key: number, callback: () => void) {
@@ -34,14 +40,26 @@ module CapBat {
     }
 
     private onKeyDown(e) {
-      event.preventDefault();
+      e.preventDefault();
       if(this.keys[e.keyCode]) this.keys[e.keyCode].active = true;
       console.log(e.keyCode);
     }
 
     private onKeyUp(e) {
-      event.preventDefault();
+      e.preventDefault();
       if(this.keys[e.keyCode]) this.keys[e.keyCode].active = false;
+    }
+
+    private onMouseMove(e) {
+      e.preventDefault();
+      this.mouseScreenPos.x = e.pageX;
+      this.mouseScreenPos.y = e.pageY;
+      this.mouseWorldPos.x = e.pageX - this.game.camera.p.x;
+      this.mouseWorldPos.y = e.pageY - this.game.camera.p.y;
+    }
+
+    private onMouseUp(e) {
+      console.log('screen position is ', this.mouseScreenPos, 'world position is ', this.mouseWorldPos);
     }
 
     public processKeys() {
@@ -49,5 +67,27 @@ module CapBat {
         if(this.keys[i] && this.keys[i].active) this.keys[i].callback();
       }
     }
+  }
+
+  export class Camera implements GameObject, Entity {
+
+    public game: Game;
+    public id: number;
+    private _p: Vec2;
+    public r: number;
+
+    constructor( game: Game, position: Vec2, rotation: number) {
+      this.game = game;
+      this.id = game.assignId();
+      this._p = Vec2.clone(position);
+      this.r = rotation;
+    }
+
+    public update( speed: number ) {
+
+    }
+
+    get p(): Vec2 { return Vec2.clone( this._p ); }
+    set p( v: Vec2 ){ this._p.set( v ); }
   }
 }

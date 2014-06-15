@@ -4,10 +4,12 @@
 module CapBat {
   export class MathUtils {
     public static getNormalBetweenVecs( from: CapBat.Vec2, to: CapBat.Vec2 ) {
-      var fromV = new CapBat.Vec2().set(from),
-          toV = new CapBat.Vec2().set(to);
+      var fromV = Vec2.clone(from),
+          toV =  Vec2.clone(to);
       toV.sub( fromV );
-      return toV.normalize();
+      toV.normalize();
+
+      return toV;
     }
 
   }
@@ -28,8 +30,8 @@ module CapBat {
     }
 
     public sub( v:  Vec2 ): Vec2 {
-      this.x += v.x;
-      this.y += v.y;
+      this.x -= v.x;
+      this.y -= v.y;
       return this;
     }
 
@@ -48,7 +50,7 @@ module CapBat {
       return this;
     }
 
-    public magnitude( ) {
+    public magnitude( ): number {
       return Math.sqrt( ( this.x * this.x ) + ( this.y * this.y ) );
     }
 
@@ -66,8 +68,8 @@ module CapBat {
       return this;
     }
 
-    public angleTo( v: Vec2 ) {
-      var normal = MathUtils.getNormalBetweenVecs( v, this );
+    public angleTo( v: Vec2 ): number {
+      var normal = MathUtils.getNormalBetweenVecs( this, v );
       return Math.atan2( normal.y, normal.x );
     }
 
@@ -91,5 +93,16 @@ module CapBat {
     public static clone( v: Vec2 ): Vec2 {
       return new Vec2(v.x, v.y);
     }
+
+    public static normalFromRadian( r: number ): Vec2 {
+      var normal = new Vec2();
+      normal.x = Math.cos(r);
+      normal.y = Math.sin(r);
+      return normal;
+    }
+
+//    public rotate( radians: number ): Vec2 {
+//
+//    }
   }
 }
