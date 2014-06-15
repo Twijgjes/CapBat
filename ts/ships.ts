@@ -108,7 +108,7 @@ module CapBat {
 
   export class Cruiser extends Ship {
 
-    private _weapons: Turret[];
+    private _weapons: any[];
 
     constructor( game: Game, p: Vec2, v: Vec2, a: Vec2, r: number, rV: number, rA: number ) {
       super( game, p, v, a, r, rV, rA );
@@ -136,6 +136,11 @@ module CapBat {
         this._weapons.push( turret );
         this.game.entities.push( turret );
       });
+
+      var flakCannon = new FlakCannon( this.game, this, new Vec2(0,-104), 0 );
+      this._children.push( flakCannon );
+//      this._weapons.push( flakCannon );
+      this.game.entities.push( flakCannon );
 
       this.game.controls.registerKey(32, () => { this.shoot() } );
       this.game.controls.registerKey(38, () => { this.move([0,-1]) } );

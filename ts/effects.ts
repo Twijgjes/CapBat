@@ -49,4 +49,56 @@ module CapBat {
     set c( color: Color ){ this._c.set( color ); }
 
   }
+
+  export class Explosion implements Entity, Drawable {
+
+    public game: Game;
+    public id: number;
+    private _p: Vec2;
+    public r: number;
+    public radius: number;
+    private _c: Color;
+    private _epoch: number;
+    private _life: number;
+
+    constructor( game: Game, position: Vec2, radius: number ) {
+      this.game = game;
+      this.id = game.assignId();
+      this._p = position;
+      this.r = 0;
+      this.radius = radius;
+      this._c = new Color(255, 100, 0, .8);
+      this._epoch = new Date().getTime();
+      this._life = 500;
+      game.drawables.push( this );
+      game.entities.push( this );
+    }
+
+    update( speed: number ) {
+
+    }
+
+    draw( canvas, context ) {
+      var radius = this.radius * ( ( new Date().getTime() - this._epoch ) / this._life );
+      context.save();
+      context.translate( this.p.x, this.p.y );
+      context.rotate( this.r );
+      context.beginPath();
+      context.fillStyle = this.c.getString();
+      context.arc( 0, 0, radius, 0, Math.PI * 2, false );
+      context.fill();
+      context.restore();
+    }
+
+    destroy() {
+      this.game.drawables.splice( this.game.drawables.indexOf( this ), 1 );
+      this.game.entities.splice( this.game.entities.indexOf( this ), 1 );
+    }
+
+    get p(): Vec2 { return Vec2.clone( this._p ); }
+    set p( v: Vec2 ){ this._p.set( v ); }
+
+    get c(): Color { return Color.clone( this._c ); }
+    set c( color: Color ){ this._c.set( color ); }
+  }
 }
