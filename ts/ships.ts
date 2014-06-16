@@ -115,9 +115,9 @@ module CapBat {
       this._children = [];
       this._weapons = [];
 
+      var engineFlareLeft = new EngineFlare( this.game, new Vec2(-62, 102), 0, 20, new Color( 0,0,255,0 ) );
+      this._children.push( engineFlareLeft );
       this.initHull();
-//      var engineFlareLeft = new EngineFlare( this.game, new Vec2(-72, 90), 0, 20, new Color( 0,0,255,1 ) );
-//      this._children.push( engineFlareLeft );
 
       var turrets = [
         new Vec2(40, -16),

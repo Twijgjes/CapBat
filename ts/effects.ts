@@ -26,15 +26,17 @@ module CapBat {
     public draw( canvas, context ) {
       context.save();
       context.translate( this.p.x, this.p.y );
+      context.scale(1,5);
       context.rotate( this.r );
+
       // TODO: Fix this shit.
-      var grd = context.createRadialGradient(this.width / 2, 0, 1, this.width / 2, this.width * 2 * this.intensity, this.width / 2);
-      grd.addColorStop(0, this.c.getString());
-      this.c.a = 0;
+      var grd = context.createRadialGradient( this.width / 2, 0, 2, this.width / 2, 0, this.width / 2 );
+      grd.addColorStop(0, 'rgba(220, 220, 255, 0.8)');
+//      this.c.a = 0;
       grd.addColorStop(1, this.c.getString());
-      this.c.a = 1;
+
       context.fillStyle = grd;
-      context.fillRect( 0, 0, this.width, this.width * 2 );
+      context.fillRect( 0, 0, this.width, this.width );
       context.restore();
     }
 
