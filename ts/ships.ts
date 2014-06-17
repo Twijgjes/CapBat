@@ -137,7 +137,7 @@ module CapBat {
         this.game.entities.push( turret );
       });
 
-      var flakCannon = new FlakCannon( this.game, this, new Vec2(0,-104), 0 );
+      var flakCannon = new FlakCannon( this.game, this, new Vec2(0,-104), 0, 300 );
       this._children.push( flakCannon );
 //      this._weapons.push( flakCannon );
       this.game.entities.push( flakCannon );

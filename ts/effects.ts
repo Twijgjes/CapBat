@@ -61,6 +61,7 @@ module CapBat {
     public radius: number;
     private _c: Color;
     private _epoch: number;
+    private _lifetime: number;
     private _life: number;
 
     constructor( game: Game, position: Vec2, radius: number ) {
@@ -71,17 +72,20 @@ module CapBat {
       this.radius = radius;
       this._c = new Color(255, 100, 0, .8);
       this._epoch = new Date().getTime();
-      this._life = 500;
-      game.drawables.push( this );
-      game.entities.push( this );
+      this._lifetime = 500;
+      this._life = 0;
+      this.game.drawables.push( this );
+      this.game.entities.push( this );
+      console.log('an explosion was created');
     }
 
     update( speed: number ) {
-
+      this._life = ( ( new Date().getTime() - this._epoch ) / this._lifetime );
+      if( this._life >= 1 ) this.destroy();
     }
 
     draw( canvas, context ) {
-      var radius = this.radius * ( ( new Date().getTime() - this._epoch ) / this._life );
+      var radius = this.radius * this._life;
       context.save();
       context.translate( this.p.x, this.p.y );
       context.rotate( this.r );
