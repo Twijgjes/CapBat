@@ -100,4 +100,56 @@ module CapBat {
       context.restore();
     }
   }
+
+  interface Star {
+    position: number[];
+    color: Color;
+    radius: number;
+  }
+
+  export class StarForge implements Drawable, GameObject {
+
+    public game: Game;
+    public id: number;
+    private _amount: number;
+    private _range: number;
+    private _stars: Star[];
+
+    constructor( game: Game, amount: number ) {
+      this.game = game;
+      this.id = game.assignId();
+      this._amount = amount;
+      this._range = 4000;
+      this._stars = [];
+      this.generateStars();
+    }
+
+    public draw( canvas, context ) {
+      this._stars.forEach( (star) => {
+        context.beginPath();
+        context.fillStyle = star.color.getString();
+//        context.fillRect(star.position[0], star.position[1], 1, 1);
+        context.arc(star.position[0], star.position[1], star.radius, 0, Math.PI * 2);
+        context.fill();
+      });
+    }
+
+    private generateStars() {
+      for( var i = 0; i < this._amount; i++) {
+        var pos = [
+          (Math.random() * this._range) - (this._range/2),
+          (Math.random() * this._range) - (this._range/2)
+        ];
+        var r = 200 + Math.round(Math.random() * 55);
+        var g = 150 + Math.round(Math.random() * 105);
+        var b = 230 + Math.round(Math.random() * 25);
+        this._stars.push( {
+          position: pos,
+          color: new Color( r, g, b, 1 ),
+          radius: ( Math.random() * 2 )
+        } );
+      }
+    }
+
+  }
 }

@@ -93,21 +93,7 @@ module CapBat {
     }
 
     public initGameState() {
-      var points = [
-        new Vec2(0, 5),
-        new Vec2(5, -5),
-        new Vec2(-5, -5)
-      ];
-      // X = Green
-//      this.drawables.push( new Triangle( this, new Vec2( 200, 0 ), 0, new Color( 0, 255, 10, 1 ), points ) );
-      // Y = Red
-//      this.drawables.push( new Triangle( this, new Vec2( 0, 200 ), 0, new Color( 255, 10, 10, 1 ), points ) );
-      // -X, -Y = blue
-//      this.drawables.push( new Triangle( this, new Vec2( -200, -200 ), 0, new Color( 10, 10, 255, 1 ), points ) );
-//      this.drawables.push( new Circle( this, new Vec2( 100, 100 ), 0, new Color( 1, 250, 1, 1 ), 50 ) );
-//      var fighter = new Fighter( this, new Vec2(10,10), new Vec2(), new Vec2(), 0, 0, 0 );
-//      this.drawables.push( fighter );
-//      this.entities.push( fighter );
+      this.drawables.push( new StarForge( this, 2000 ));
       var cruiser = new Cruiser( this, new Vec2(), new Vec2(), new Vec2(), 0, 0, 0 );
       this.drawables.push( cruiser );
       this.entities.push( cruiser );
