@@ -32,13 +32,15 @@ module CapBat {
       this._rA = rA;
       this.c = new Color(100,100,100,1);
       this.throttle = 0;
+      this.game.drawables.push( this );
+      this.game.entities.push( this );
     }
 
-    update( speed: number ){
+    public update( speed: number ) {
 
     }
 
-    draw( canvas, context ) {
+    public draw( canvas, context ) {
 
     }
 
@@ -67,19 +69,12 @@ module CapBat {
     constructor( game: Game, p: Vec2, v: Vec2, a: Vec2, r: number, rV: number, rA: number ) {
       super( game, p, v, a, r, rV, rA );
       this._children = [];
-      this._children.push( new Triangle(game, new Vec2(0,0), 0, new Color(128, 128, 128, 1), [
-        new Vec2(-5, -5),
-        new Vec2(0 , 10),
-        new Vec2(5 , -5)
-      ]));
-//      this.game.controls.registerKey(32, () => { this.shoot() } );
-      console.log( this.game );
-      console.log( this );
       this.cooldown = 250;
       this.lastShot = new Date().getTime();
+      this.initHull();
     }
 
-    draw( canvas, context ) {
+    public draw( canvas, context ) {
       context.save();
       context.translate( this.p.x, this.p.y );
       context.rotate( this.r );
@@ -89,8 +84,8 @@ module CapBat {
       context.restore();
     }
 
-    update( speed ) {
-      //this.r += .1;
+    public update( speed ) {
+
     }
 
     public shoot() {
@@ -105,6 +100,16 @@ module CapBat {
       var now =  new Date().getTime();
       return now >= this.lastShot + this.cooldown;
 
+    }
+
+    private initHull() {
+      this._children.push( new Rect( this.game, new Vec2(-4,3), 0, new Color(170, 170, 170, 1), 8, 7));
+      this._children.push( new Rect( this.game, new Vec2(-1,1), 0, new Color(50, 50, 200, 1), 2, 4));
+//      this._children.push( new Triangle(game, new Vec2(0,0), 0, new Color(128, 128, 128, 1), [
+//        new Vec2(-5, -5),
+//        new Vec2(0 , 10),
+//        new Vec2(5 , -5)
+//      ]));
     }
   }
 
@@ -159,7 +164,7 @@ module CapBat {
       console.log( this );
     }
 
-    draw( canvas, context ) {
+    public draw( canvas, context ) {
       context.save();
       context.translate( this.p.x, this.p.y );
       context.rotate( this.r );
@@ -170,13 +175,13 @@ module CapBat {
       context.restore();
     }
 
-    update( speed: number ) {
+    public update( speed: number ) {
       this.v = this.v.add( this.a );
       this.p = this.p.add( this.v );
       this.a = new Vec2();
     }
 
-    move( direction: number[] ) {
+    public move( direction: number[] ) {
       this.a = this.a.add( new Vec2(direction[0], direction[1]).multiplyScalar(.01) );
       if( direction[1] < 0 ) this.throttle = 1;
       if( direction[1] > 0 ) this.throttle = 0;
