@@ -19,6 +19,7 @@ module CapBat {
     private _rA: number;
     public c: Color;
     public _children: Drawable[];
+    public throttle: number;
 
     constructor( game: Game, p: Vec2, v: Vec2, a: Vec2, r: number, rV: number, rA: number ) {
       this.game = game;
@@ -30,6 +31,7 @@ module CapBat {
       this._rV = rV;
       this._rA = rA;
       this.c = new Color(100,100,100,1);
+      this.throttle = 0;
     }
 
     update( speed: number ){
@@ -115,7 +117,13 @@ module CapBat {
       this._children = [];
       this._weapons = [];
 
-      var engineFlareLeft = new EngineFlare( this.game, new Vec2(-62, 102), 0, 20, new Color( 0,0,255,0 ) );
+      var engineFlareLeft = new EngineFlare( this, new Vec2(-68, 102), 0, 20, new Color( 0,0,255,0 ) );
+      this._children.push( engineFlareLeft );
+      var engineFlareLeft = new EngineFlare( this, new Vec2(-57, 102), 0, 20, new Color( 0,0,255,0 ) );
+      this._children.push( engineFlareLeft );
+      var engineFlareLeft = new EngineFlare( this, new Vec2(48, 102), 0, 20, new Color( 0,0,255,0 ) );
+      this._children.push( engineFlareLeft );
+      var engineFlareLeft = new EngineFlare( this, new Vec2(37, 102), 0, 20, new Color( 0,0,255,0 ) );
       this._children.push( engineFlareLeft );
       this.initHull();
 
@@ -170,6 +178,8 @@ module CapBat {
 
     move( direction: number[] ) {
       this.a = this.a.add( new Vec2(direction[0], direction[1]).multiplyScalar(.01) );
+      if( direction[1] < 0 ) this.throttle = 1;
+      if( direction[1] > 0 ) this.throttle = 0;
     }
 
     public shoot() {

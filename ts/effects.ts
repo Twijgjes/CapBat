@@ -6,6 +6,7 @@ module CapBat {
   export class EngineFlare implements Entity, Drawable {
 
     public game: Game;
+    public ship: Ship;
     public id: number;
     public intensity: number;
     private _c: Color;
@@ -13,26 +14,30 @@ module CapBat {
     public r;
     public width: number;
 
-    constructor( game: Game, position: Vec2, rotation: number, width: number, color: Color ){
-      this.game = game;
-      this.id = game.assignId();
-      this.intensity = 1;
+    constructor( ship: Ship, position: Vec2, rotation: number, width: number, color: Color ){
+      this.ship = ship;
+      this.game = ship.game;
+      this.id = this.game.assignId();
+      this.intensity = 0;
       this._p = position;
       this.r = rotation;
       this.width = width;
       this._c = color;
+      this.game.entities.push( this );
     }
 
     public draw( canvas, context ) {
       context.save();
       context.translate( this.p.x, this.p.y );
-      context.scale(1,5);
+      context.scale(1,5 * this.intensity);
       context.rotate( this.r );
 
-      // TODO: Fix this shit.
       var grd = context.createRadialGradient( this.width / 2, 0, 2, this.width / 2, 0, this.width / 2 );
       grd.addColorStop(0, 'rgba(220, 220, 255, 0.8)');
-//      this.c.a = 0;
+      var store = this.c.a;
+      this.c.a = .7;
+      grd.addColorStop(.6, this.c.getString());
+      this.c.a = store;
       grd.addColorStop(1, this.c.getString());
 
       context.fillStyle = grd;
@@ -41,7 +46,11 @@ module CapBat {
     }
 
     public update( speed: number ) {
-
+      if( this.ship.throttle > 0) {
+        this.intensity = Math.min( this.intensity += ( .2 * speed ), 1 );
+        return;
+      }
+      this.intensity = Math.max( this.intensity -= ( .2 * speed ), 0 );
     }
 
     get p(): Vec2 { return Vec2.clone( this._p ); }
@@ -90,7 +99,14 @@ module CapBat {
       context.translate( this.p.x, this.p.y );
       context.rotate( this.r );
       context.beginPath();
-      context.fillStyle = this.c.getString();
+      // TODO: fixme
+      var grd = context.createRadialGradient( radius, 0, 2, radius, 0, radius );
+      grd.addColorStop(0, this.c.getString());
+      grd.addColorStop(.9, this.c.getString());
+      this.c.a = 0;
+      grd.addColorStop(1, this.c.getString());
+      this.c.a = 1;
+      context.fillStyle = grd;
       context.arc( 0, 0, radius, 0, Math.PI * 2, false );
       context.fill();
       context.restore();
