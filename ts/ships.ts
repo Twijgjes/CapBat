@@ -30,6 +30,8 @@ module CapBat {
       this._rV = rV;
       this._rA = rA;
       this.c = new Color(100,100,100,1);
+      this.game.drawables.push( this );
+      this.game.entities.push( this );
     }
 
     update( speed: number ){
@@ -65,16 +67,9 @@ module CapBat {
     constructor( game: Game, p: Vec2, v: Vec2, a: Vec2, r: number, rV: number, rA: number ) {
       super( game, p, v, a, r, rV, rA );
       this._children = [];
-      this._children.push( new Triangle(game, new Vec2(0,0), 0, new Color(128, 128, 128, 1), [
-        new Vec2(-5, -5),
-        new Vec2(0 , 10),
-        new Vec2(5 , -5)
-      ]));
-//      this.game.controls.registerKey(32, () => { this.shoot() } );
-      console.log( this.game );
-      console.log( this );
       this.cooldown = 250;
       this.lastShot = new Date().getTime();
+      this.initHull();
     }
 
     draw( canvas, context ) {
@@ -103,6 +98,16 @@ module CapBat {
       var now =  new Date().getTime();
       return now >= this.lastShot + this.cooldown;
 
+    }
+
+    private initHull() {
+      this._children.push( new Rect( this.game, new Vec2(-4,3), 0, new Color(170, 170, 170, 1), 8, 7));
+      this._children.push( new Rect( this.game, new Vec2(-1,1), 0, new Color(50, 50, 200, 1), 2, 4));
+//      this._children.push( new Triangle(game, new Vec2(0,0), 0, new Color(128, 128, 128, 1), [
+//        new Vec2(-5, -5),
+//        new Vec2(0 , 10),
+//        new Vec2(5 , -5)
+//      ]));
     }
   }
 
