@@ -101,8 +101,10 @@ module CapBat {
       return normal;
     }
 
-//    public rotate( radians: number ): Vec2 {
-//
-//    }
+    public rotate( radians: number ): Vec2 {
+      this.x = this.x * Math.cos(radians) - this.y * Math.sin(radians);
+      this.y = this.x * Math.sin(radians) + this.y * Math.cos(radians);
+      return this;
+    } 
   }
 }
