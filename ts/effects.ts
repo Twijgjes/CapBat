@@ -61,6 +61,63 @@ module CapBat {
 
   }
 
+  export class ThrusterFlare implements Entity, Drawable {
+
+    public game: Game;
+    public ship: Ship;
+    public id: number;
+    public intensity: number;
+    private _c: Color;
+    private _p: Vec2;
+    public width: number;
+    public r: number;
+
+    constructor( ship: Ship, position: Vec2, rotation: number, width: number, color: Color ){
+      this.ship = ship;
+      this.game = ship.game;
+      this.id = this.game.assignId();
+      this.intensity = 0;
+      this._p = position;
+      this.r = rotation;
+      this.width = width;
+      this._c = color;
+      this.game.entities.push( this );
+    }
+
+    public draw( canvas, context ) {
+      context.save();
+      context.translate( this.p.x, this.p.y );
+      context.rotate( this.r );
+
+      var grd = context.createLinearGradient(  );
+      grd.addColorStop(0, 'rgba(220, 220, 255, 0.8)');
+      var store = this.c.a;
+      this.c.a = .7;
+      grd.addColorStop(.6, this.c.getString());
+      this.c.a = store;
+      grd.addColorStop(1, this.c.getString());
+
+      context.fillStyle = grd;
+      context.fillRect( 0, 0, this.width, this.width * 2 );
+      context.restore();
+    }
+
+    public update( speed: number ) {
+      if( this.ship.throttle > 0) {
+        this.intensity = Math.min( this.intensity += ( .2 * speed ), 1 );
+        return;
+      }
+      this.intensity = Math.max( this.intensity -= ( .2 * speed ), 0 );
+    }
+
+    get p(): Vec2 { return Vec2.clone( this._p ); }
+    set p( v: Vec2 ){ this._p.set( v ); }
+
+    get c(): Color { return Color.clone( this._c ); }
+    set c( color: Color ){ this._c.set( color ); }
+
+  }
+
   export class Explosion implements Entity, Drawable {
 
     public game: Game;

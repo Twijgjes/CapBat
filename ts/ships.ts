@@ -72,6 +72,7 @@ module CapBat {
       this.cooldown = 250;
       this.lastShot = new Date().getTime();
       this.initHull();
+
     }
 
     public draw( canvas, context ) {
@@ -97,19 +98,35 @@ module CapBat {
     }
 
     private cooledDown() {
-      var now =  new Date().getTime();
+      var now = new Date().getTime();
       return now >= this.lastShot + this.cooldown;
-
     }
 
     private initHull() {
-      this._children.push( new Rect( this.game, new Vec2(-4,3), 0, new Color(170, 170, 170, 1), 8, 7));
-      this._children.push( new Rect( this.game, new Vec2(-1,1), 0, new Color(50, 50, 200, 1), 2, 4));
-//      this._children.push( new Triangle(game, new Vec2(0,0), 0, new Color(128, 128, 128, 1), [
-//        new Vec2(-5, -5),
-//        new Vec2(0 , 10),
-//        new Vec2(5 , -5)
-//      ]));
+      this._children.push( new Rect( this.game, new Vec2(-4,-3), 0, new Color(170, 170, 170, 1), 8, 7));
+      this._children.push( new Rect( this.game, new Vec2(-1,-2), 0, new Color(50, 50, 200, 1), 2, 4));
+      this._children.push( new Triangle( this.game , new Vec2(-4,-3), 0, new Color(128, 128, 128, 1), [
+        new Vec2(0, 0),
+        new Vec2(0 , 7),
+        new Vec2(-5 , 7)
+      ]));
+      this._children.push( new Triangle( this.game , new Vec2(4,-3), 0, new Color(128, 128, 128, 1), [
+        new Vec2(0, 0),
+        new Vec2(0 , 7),
+        new Vec2(5 , 7)
+      ]));
+      this._children.push( new Triangle( this.game , new Vec2(-6,3), 0, new Color(128, 128, 128, 1), [
+        new Vec2(0, 0),
+        new Vec2(-3 , 0),
+        new Vec2(0 , 6)
+      ]));
+      this._children.push( new Triangle( this.game , new Vec2(6,3), 0, new Color(128, 128, 128, 1), [
+        new Vec2(0, 0),
+        new Vec2(3 , 0),
+        new Vec2(0 , 6)
+      ]));
+      this._children.push( new Rect( this.game, new Vec2(-6,3), 0, new Color(128, 128, 128, 1), 3, 5));
+      this._children.push( new Rect( this.game, new Vec2(3,3), 0, new Color(128, 128, 128, 1), 3, 5));
     }
   }
 

@@ -94,6 +94,7 @@ module CapBat {
 
     public initGameState() {
       this.drawables.push( new StarForge( this, 2000 ) );
+      this.drawables.push( new Axes( this, new Vec2((-this.settings.WIDTH / 2) + 70, ( this.settings.HEIGHT / 2 ) - 70), 0 ));
       var cruiser = new Cruiser( this, new Vec2(), new Vec2(), new Vec2(), 0, 0, 0 );
 
       var fighter = new Fighter( this, new Vec2(100,100), new Vec2(), new Vec2(), 0, 0, 0 );
