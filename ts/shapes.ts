@@ -105,4 +105,74 @@ module CapBat {
     }
 
   }
+
+  export class Axes implements GameObject, Drawable {
+
+    public game: Game;
+    public id: number;
+    private _p: Vec2;
+    public r: number;
+    private _c: Color;
+
+    constructor( game: CapBat.Game, pos: CapBat.Vec2, rot: number ) {
+      this.game = game;
+      this.id = game.assignId();
+      this._p = pos;
+      this.r = rot;
+      this._c = new Color();
+    }
+
+    public draw( canvas, context ) {
+      context.save();
+      context.translate( this.p.x, this.p.y );
+      context.rotate( this.r );
+      context.lineWidth = 2;
+
+      context.strokeStyle = 'rgba(255, 0, 0, 1)';
+      context.beginPath();
+      context.moveTo(0, 0);
+      context.lineTo(50, 0);
+      context.stroke();
+      context.fill();
+      context.font = '10pt Calibri';
+      context.fillStyle = 'rgba(255, 0, 0, 1)';
+      context.fillText('+x', 50, 0);
+
+      context.strokeStyle = 'rgba(255, 0, 0, 1)';
+      context.beginPath();
+      context.moveTo(0, 0);
+      context.lineTo(-50, 0);
+      context.stroke();
+      context.fill();
+      context.font = '10pt Calibri';
+      context.fillStyle = 'rgba(255, 0, 0, 1)';
+      context.fillText('-x', -60, 0);
+
+      context.strokeStyle = 'rgba(0, 255, 0, 1)';
+      context.beginPath();
+      context.moveTo(0, 0);
+      context.lineTo(0, 50);
+      context.stroke();
+      context.fill();
+      context.font = '10pt Calibri';
+      context.fillStyle = 'rgba(0, 255, 0, 1)';
+      context.fillText('+y', 0, 60);
+
+      context.strokeStyle = 'rgba(0, 255, 0, 1)';
+      context.beginPath();
+      context.moveTo(0, 0);
+      context.lineTo(0, -50);
+      context.stroke();
+      context.fill();
+      context.font = '10pt Calibri';
+      context.fillStyle = 'rgba(0, 255, 0, 1)';
+      context.fillText('-y', 0, -50);
+
+      context.restore();
+    }
+
+    get p(): Vec2 { return Vec2.clone( this._p ); }
+    set p( v: Vec2 ){ this._p.set( v ); }
+
+  }
 }

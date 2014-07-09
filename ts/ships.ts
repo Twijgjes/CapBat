@@ -19,6 +19,7 @@ module CapBat {
     private _rA: number;
     public c: Color;
     public _children: Drawable[];
+    public throttle: number;
 
     constructor( game: Game, p: Vec2, v: Vec2, a: Vec2, r: number, rV: number, rA: number ) {
       this.game = game;
@@ -30,15 +31,16 @@ module CapBat {
       this._rV = rV;
       this._rA = rA;
       this.c = new Color(100,100,100,1);
+      this.throttle = 0;
       this.game.drawables.push( this );
       this.game.entities.push( this );
     }
 
-    update( speed: number ){
+    public update( speed: number ) {
 
     }
 
-    draw( canvas, context ) {
+    public draw( canvas, context ) {
 
     }
 
@@ -70,9 +72,10 @@ module CapBat {
       this.cooldown = 250;
       this.lastShot = new Date().getTime();
       this.initHull();
+
     }
 
-    draw( canvas, context ) {
+    public draw( canvas, context ) {
       context.save();
       context.translate( this.p.x, this.p.y );
       context.rotate( this.r );
@@ -82,8 +85,8 @@ module CapBat {
       context.restore();
     }
 
-    update( speed ) {
-      //this.r += .1;
+    public update( speed ) {
+
     }
 
     public shoot() {
@@ -95,19 +98,35 @@ module CapBat {
     }
 
     private cooledDown() {
-      var now =  new Date().getTime();
+      var now = new Date().getTime();
       return now >= this.lastShot + this.cooldown;
-
     }
 
     private initHull() {
-      this._children.push( new Rect( this.game, new Vec2(-4,3), 0, new Color(170, 170, 170, 1), 8, 7));
-      this._children.push( new Rect( this.game, new Vec2(-1,1), 0, new Color(50, 50, 200, 1), 2, 4));
-//      this._children.push( new Triangle(game, new Vec2(0,0), 0, new Color(128, 128, 128, 1), [
-//        new Vec2(-5, -5),
-//        new Vec2(0 , 10),
-//        new Vec2(5 , -5)
-//      ]));
+      this._children.push( new Rect( this.game, new Vec2(-4,-3), 0, new Color(170, 170, 170, 1), 8, 7));
+      this._children.push( new Rect( this.game, new Vec2(-1,-2), 0, new Color(50, 50, 200, 1), 2, 4));
+      this._children.push( new Triangle( this.game , new Vec2(-4,-3), 0, new Color(128, 128, 128, 1), [
+        new Vec2(0, 0),
+        new Vec2(0 , 7),
+        new Vec2(-5 , 7)
+      ]));
+      this._children.push( new Triangle( this.game , new Vec2(4,-3), 0, new Color(128, 128, 128, 1), [
+        new Vec2(0, 0),
+        new Vec2(0 , 7),
+        new Vec2(5 , 7)
+      ]));
+      this._children.push( new Triangle( this.game , new Vec2(-6,3), 0, new Color(128, 128, 128, 1), [
+        new Vec2(0, 0),
+        new Vec2(-3 , 0),
+        new Vec2(0 , 6)
+      ]));
+      this._children.push( new Triangle( this.game , new Vec2(6,3), 0, new Color(128, 128, 128, 1), [
+        new Vec2(0, 0),
+        new Vec2(3 , 0),
+        new Vec2(0 , 6)
+      ]));
+      this._children.push( new Rect( this.game, new Vec2(-6,3), 0, new Color(128, 128, 128, 1), 3, 5));
+      this._children.push( new Rect( this.game, new Vec2(3,3), 0, new Color(128, 128, 128, 1), 3, 5));
     }
   }
 
@@ -120,7 +139,13 @@ module CapBat {
       this._children = [];
       this._weapons = [];
 
-      var engineFlareLeft = new EngineFlare( this.game, new Vec2(-62, 102), 0, 20, new Color( 0,0,255,0 ) );
+      var engineFlareLeft = new EngineFlare( this, new Vec2(-68, 102), 0, 20, new Color( 0,0,255,0 ) );
+      this._children.push( engineFlareLeft );
+      var engineFlareLeft = new EngineFlare( this, new Vec2(-57, 102), 0, 20, new Color( 0,0,255,0 ) );
+      this._children.push( engineFlareLeft );
+      var engineFlareLeft = new EngineFlare( this, new Vec2(48, 102), 0, 20, new Color( 0,0,255,0 ) );
+      this._children.push( engineFlareLeft );
+      var engineFlareLeft = new EngineFlare( this, new Vec2(37, 102), 0, 20, new Color( 0,0,255,0 ) );
       this._children.push( engineFlareLeft );
       this.initHull();
 
@@ -156,7 +181,7 @@ module CapBat {
       console.log( this );
     }
 
-    draw( canvas, context ) {
+    public draw( canvas, context ) {
       context.save();
       context.translate( this.p.x, this.p.y );
       context.rotate( this.r );
@@ -167,14 +192,16 @@ module CapBat {
       context.restore();
     }
 
-    update( speed: number ) {
+    public update( speed: number ) {
       this.v = this.v.add( this.a );
       this.p = this.p.add( this.v );
       this.a = new Vec2();
     }
 
-    move( direction: number[] ) {
+    public move( direction: number[] ) {
       this.a = this.a.add( new Vec2(direction[0], direction[1]).multiplyScalar(.01) );
+      if( direction[1] < 0 ) this.throttle = 1;
+      if( direction[1] > 0 ) this.throttle = 0;
     }
 
     public shoot() {

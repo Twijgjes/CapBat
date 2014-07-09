@@ -29,10 +29,14 @@ module CapBat {
       return this;
     }
 
-    public sub( v:  Vec2 ): Vec2 {
+    public sub( v: Vec2 ): Vec2 {
       this.x -= v.x;
       this.y -= v.y;
       return this;
+    }
+
+    public dot( v: Vec2 ): number {
+      return ( this.x * v.x ) + ( this.y * v.y );
     }
 
     public multiplyScalar( s: number ): Vec2 {
@@ -101,8 +105,20 @@ module CapBat {
       return normal;
     }
 
-//    public rotate( radians: number ): Vec2 {
-//
-//    }
+    public rotate( radians: number ): Vec2 {
+      var v = Vec2.clone(this);
+      v.x = ( this.x * Math.cos(radians) ) - ( this.y * Math.sin(radians) );
+      v.y = ( this.x * Math.sin(radians) ) + ( this.y * Math.cos(radians) );
+      this.set(v);
+      return this;
+    }
+
+    // Returns a vector perpendicular to this vector
+    public perp(): Vec2 {
+      var v = Vec2.clone(this);
+      v.x = -this.y;
+      v.y = this.x;
+      return this.set(v).normalize();
+    }
   }
 }

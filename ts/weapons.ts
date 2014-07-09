@@ -297,7 +297,6 @@ module CapBat {
         var worldPos = new Vec2().placeAround( rotation, this.parent.p, this.p.magnitude() );
         this.r = worldPos.angleTo( this.target );
       }
-//      this.r -= .01;
     }
 
     public shoot( ) {
