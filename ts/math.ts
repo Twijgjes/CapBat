@@ -1,6 +1,3 @@
-/**
- * Created by roanh_000 on 21/05/2014.
- */
 module CapBat {
   export class MathUtils {
     public static getNormalBetweenVecs( from: CapBat.Vec2, to: CapBat.Vec2 ) {
