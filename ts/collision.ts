@@ -7,11 +7,16 @@ module CapBat {
 
   export class Projection {
 
-    constructor(private x: number, private y: number){};
+    constructor(public ls: number, public le: number){}
 
     public overlap( p ) {
       // See if this projection overlaps with the given one
+      if( this.ls > p.le || this.le < p.ls ){
+        return false;
+      } else {
+        // Checken op cases. Left || right || containment
 
+      }
     }
   }
 
