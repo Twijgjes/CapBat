@@ -5,18 +5,81 @@ module CapBat {
 
   // TODO: Add support for circle vs circle & circle vs polygon
 
+  export interface Overlap {
+    type: string;
+    direction: string;
+    distance: number;
+  }
+
   export class Projection {
 
-    constructor(public ls: number, public le: number){}
+    private _length: number;
 
-    public overlap( p ) {
-      // See if this projection overlaps with the given one
-      if( this.ls > p.le || this.le < p.ls ){
-        return false;
-      } else {
-        // Checken op cases. Left || right || containment
+    constructor(public start: number, public end: number){
+      this._length = this.start - this.end;
+    }
 
+    public overlap( p ): Overlap {
+      var totalLength = Math.max(this.end, p.end) - Math.min(this.start, p.start);
+
+      if ( totalLength > this.length + p.length ) {
+        // No collision
+        var left = ;
+        if ( p.start)
+        return {
+          type: 'NOCOLLISION',
+          direction: '',
+          distance: Math.min(p.start - this.end, this.start - p.end)
+        };
       }
+
+      if ( totalLength <= Math.max(this.length, p.length) ) {
+        // Containment
+        if (this.length < p.length) {
+          return {
+            type: 'CONTAINED',
+            direction: '',
+            distance: 0 // TODO: give direction and distance
+          };
+        } else {
+          return {
+            type: 'CONTAINS',
+            direction: '',
+            distance: 0
+          };
+        }
+      }
+
+      if( this.start <= p.start ) {
+        // this overlaps p from the left
+        return {
+          type: 'OVERLAP',
+          direction: 'LEFT',
+          distance: this.end - p.start
+        };
+      } else if ( this.start > p.start ) {
+        // this overlaps p from the right
+        return {
+          type: 'OVERLAP',
+          direction: 'RIGHT',
+          distance: p.end - this.start
+        };
+      }
+
+      return {
+        type: 'FUCKUP',
+        direction: 'FUCKDOIKNOW',
+        distance: -666
+      };
+    }
+
+    static overlapDistance( p1, p2 ): number {
+      var distance = 0;
+      return distance;
+    }
+
+    get length(): number {
+      return this._length;
     }
   }
 
