@@ -87,6 +87,10 @@ module CapBat {
 
     }
 
+    public destroy() {
+
+    }
+
     get p(): Vec2 { return Vec2.clone( this._p ); }
     set p( v: Vec2 ){ this._p.set( v ); }
   }

@@ -28,6 +28,10 @@ module CapBat {
 
     }
 
+    destroy() {
+
+    }
+
     get p(): Vec2 { return Vec2.clone( this._p ); }
     set p( v: Vec2 ){ this._p.set( v ); }
 
@@ -61,12 +65,15 @@ module CapBat {
       context.fill();
       context.restore();
     }
+
+    get vertices(): Vec2[] { var verts = []; this._points.forEach((point) => { verts.push(Vec2.clone(point)) }); return verts; }
   }
 
   export class Rect extends Shape {
 
     public width: number;
     public height: number;
+    private _vertices: Vec2[];
 
     constructor( game: CapBat.Game, pos: CapBat.Vec2, rot: number, color: Color, width: number, height: number ){
       super( game, pos, rot, color );
@@ -81,6 +88,15 @@ module CapBat {
       context.fillStyle = this.c.getString();
       context.fillRect( 0, 0, this.width, this.height );
       context.restore();
+    }
+
+    get vertices(): Vec2[] {
+      var verts = [];
+      verts.push( Vec2.clone(this.p));
+      verts.push( new Vec2(this.p.x + this.width, this.p.y));
+      verts.push( new Vec2(this.p.x, this.p.y + this.height));
+      verts.push( new Vec2(this.p.x + this.width, this.p.y + this.height));
+      return verts;
     }
   }
 

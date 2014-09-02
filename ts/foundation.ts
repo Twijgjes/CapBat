@@ -24,6 +24,7 @@ module CapBat {
 //    );
 
     update( speed: number );
+
   }
 
   export interface DynamicEntity extends Entity {
@@ -43,6 +44,8 @@ module CapBat {
 //    );
 
     update( speed: number );
+
+    destroy();
 
   }
 

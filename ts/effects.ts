@@ -53,6 +53,10 @@ module CapBat {
       this.intensity = Math.max( this.intensity -= ( .2 * speed ), 0 );
     }
 
+    destroy() {
+      this.game.entities.splice( this.game.entities.indexOf( this ), 1 );
+    }
+
     get p(): Vec2 { return Vec2.clone( this._p ); }
     set p( v: Vec2 ){ this._p.set( v ); }
 
@@ -108,6 +112,10 @@ module CapBat {
         return;
       }
       this.intensity = Math.max( this.intensity -= ( .2 * speed ), 0 );
+    }
+
+    destroy() {
+      this.game.entities.splice( this.game.entities.indexOf( this ), 1 );
     }
 
     get p(): Vec2 { return Vec2.clone( this._p ); }

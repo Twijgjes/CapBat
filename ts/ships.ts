@@ -61,6 +61,47 @@ module CapBat {
 
   }
 
+  export class TriFighter extends Ship {
+
+    public collisionObject: ConvexCollisionObject;
+    public collisionBehavior;
+
+    constructor( game: Game, p: Vec2, v: Vec2, a: Vec2, r: number, rV: number, rA: number) {
+      super( game, p, v, a, r, rV, rA );
+      this._children = [];
+      this.initHull();
+      this.collisionObject = new ConvexCollisionObject( this.game, this, this._children[0].vertices, 15, () => this.v = this.v.negate() );
+    }
+
+    public draw( canvas, context ) {
+      context.save();
+      context.translate( this.p.x, this.p.y );
+      context.rotate( this.r );
+      this._children.forEach((child) => {
+        child.draw( canvas, context );
+      });
+      context.restore();
+    }
+
+    public update( speed ) {
+      this.p = this.p.add( this.v );
+    }
+
+    private initHull() {
+      this._children.push( new Triangle( this.game , new Vec2(0,0), 0, new Color(128, 128, 128, 1), [
+        new Vec2(0, 10),
+        new Vec2(-5 , -5),
+        new Vec2(5 , -5)
+      ]));
+    }
+
+    public destroy() {
+      this.game.drawables.splice( this.game.drawables.indexOf( this ), 1);
+      this.game.entities.splice( this.game.entities.indexOf( this ), 1);
+      this.collisionObject.destroy();
+    }
+  }
+
   export class Fighter extends Ship {
 
     private cooldown: number;

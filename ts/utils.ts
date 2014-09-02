@@ -99,6 +99,10 @@ module CapBat {
       context.fillRect( 0, 0, 5, 5 );
       context.restore();
     }
+
+    destroy() {
+      // TODO: Squash the fucker
+    }
   }
 
   interface Star {
@@ -149,6 +153,10 @@ module CapBat {
           radius: ( Math.random() * 2 )
         } );
       }
+    }
+
+    destroy() {
+      // TODO: Squash the fucker
     }
 
   }
